@@ -17,7 +17,7 @@
             document.getElementById('ip').innerHTML = 'Fetching...';
             document.getElementById('ip').style.color = 'yellow';
             if (window.AndroidInterface) {
-                window.AndroidInterface.doTesting();
+                window.AndroidInterface.doTesting('Hello from javascript side!!');
 
                 window.AndroidInterface.checkPrinterStatus(function(res) {
                     document.getElementById('ip').innerHTML = 'SUCCESS';
