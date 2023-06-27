@@ -16,10 +16,11 @@
         function checkPrinterStatus() {
             console.log('AndroidInterface calling...')
             document.getElementById('ip').innerHTML = 'Fetching...';
-            document.getElementById('ip').style.color = 'yelow';
+            document.getElementById('ip').style.color = 'yellow';
             if (window.AndroidInterface) {
+                window.AndroidInterface.doTesting();
                 window.AndroidInterface.checkPrinterStatus((res)=>{
-                    document.getElementById('ip').innerHTML = res;
+                    document.getElementById('ip').innerHTML = 'SUCCESS';
                     document.getElementById('ip').style.color = 'green';
                     console.log(res);
                 });
