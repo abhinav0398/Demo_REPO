@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CHALO SPOT BOOKING</title>
+</head>
+<body>
+    <h1 style="text-align: center; font-size: 50px; color: rgb(237, 168, 40)">CHALO SPOT BOOKING</h1>
+    <div style="text-align: center; margin-top: 100px;">
+        <button onclick="checkPrinterStatus()" style="font-size: 30px;color: orange; border-radius: 12px; border: 4px solid orange; padding: 15px; width: 50%;">Get Print Status</button>
+        <div id="ip" style="font-size: 30px; margin-top: 10px;"></div>
+    </div>
+    
+</body>
+
+    <script>
+        function checkPrinterStatus() {
+            console.log('AndroidInterface calling...')
+            document.getElementById('ip').innerHTML = 'Fetching...';
+            document.getElementById('ip').style.color = 'yelow';
+            if (window.AndroidInterface) {
+                window.AndroidInterface.checkPrinterStatus((res)=>{
+                    document.getElementById('ip').innerHTML = res;
+                    document.getElementById('ip').style.color = 'green';
+                    console.log(res);
+                });
+            } else {
+                document.getElementById('ip').innerHTML = 'Android Interface is not available';
+                document.getElementById('ip').style.color = 'red';
+            }
+        }
+    </script>
+</html>
