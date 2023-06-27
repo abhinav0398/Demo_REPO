@@ -48,9 +48,9 @@
         }
 
         function printSpotBookingTicket() {
-            const ticketObj = JSON.stringify(ticketObj);
+            const ticket = JSON.stringify(ticketObj);
             if (window.PremiumSpotBookingAndroidInterface) {
-                window.PremiumSpotBookingAndroidInterface.printSpotBookingTicket(ticketObj);
+                window.PremiumSpotBookingAndroidInterface.printSpotBookingTicket(ticket);
             }else{
                 document.getElementById('ip').innerHTML = 'FAILED';
                 document.getElementById('ip').style.color = 'red';
