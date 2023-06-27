@@ -19,7 +19,7 @@
             document.getElementById('ip').style.color = 'yellow';
             if (window.AndroidInterface) {
                 window.AndroidInterface.doTesting();
-                window.AndroidInterface.checkPrinterStatus((res)=>{
+                window.AndroidInterface.checkPrinterStatus(function(res) {
                     document.getElementById('ip').innerHTML = 'SUCCESS';
                     document.getElementById('ip').style.color = 'green';
                     console.log(res);
