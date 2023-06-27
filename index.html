@@ -14,11 +14,11 @@
 
     <script>
         function checkPrinterStatus() {
-            console.log('AndroidInterface calling...')
             document.getElementById('ip').innerHTML = 'Fetching...';
             document.getElementById('ip').style.color = 'yellow';
             if (window.AndroidInterface) {
                 window.AndroidInterface.doTesting();
+
                 window.AndroidInterface.checkPrinterStatus(function(res) {
                     document.getElementById('ip').innerHTML = 'SUCCESS';
                     document.getElementById('ip').style.color = 'green';
@@ -28,6 +28,13 @@
                 document.getElementById('ip').innerHTML = 'Not working';
                 document.getElementById('ip').style.color = 'red';
             }
+
+            window.addEventListener('message', (res)=>{
+                document.getElementById('ip').innerHTML = 'SUCCESS';
+                document.getElementById('ip').style.color = 'green';
+            });
         }
+
+        
     </script>
 </html>
