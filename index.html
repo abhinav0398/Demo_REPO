@@ -6,40 +6,79 @@
 <body>
     <h1 style="text-align: center; font-size: 50px; color: rgb(237, 168, 40)">CHALO SPOT BOOKING</h1>
     <div style="text-align: center; margin-top: 100px;">
-        <button onclick="checkPrinterStatus()" style="font-size: 30px;color: orange; border-radius: 12px; border: 4px solid orange; padding: 15px; width: 50%;">Get Print Status</button>
+        <button onclick="printSpotBookingTicket()" style="font-size: 30px;color: rgb(88, 88, 87); border-radius: 12px; border: 4px solid rgb(127, 126, 125); padding: 15px; width: 50%; pointer-events: none;">Get Print Status</button>
         <div id="ip" style="font-size: 30px; margin-top: 10px;"></div>
     </div>
     
 </body>
 
     <script>
+        let ticketObj = {
+            "ticketNo": "1234",
+            "transactionTime": "16200003",
+            "routeName": "142",
+            "fromStop": "Airport",
+            "toStop": "Marol",
+            "totalFare": "120.65",
+            "passengerDetails": [
+                {
+                "pxCount": "1",
+                "pxType": "Adult"
+                }
+            ],
+            "busNo": "MH03/163",
+            "paymentInfo": {
+                "paymentMode": "UPI/CASH"
+            }
+        }
         function checkPrinterStatus() {
-            document.getElementById('ip').innerHTML = 'Fetching...';
+            document.getElementById('ip').innerHTML = 'FETCHING...';
             document.getElementById('ip').style.color = 'yellow';
-            if (window.AndroidInterface) {
-                window.AndroidInterface.doTesting('Hello from javascript side!!');
-
-                window.AndroidInterface.checkPrinterStatus(function(res) {
-                    document.getElementById('ip').innerHTML = 'SUCCESS';
-                    document.getElementById('ip').style.color = 'green';
-                    console.log(res);
-                });
+            if (window.PremiumSpotBookingAndroidInterface) {
+                window.PremiumSpotBookingAndroidInterface.checkPrinterStatus();
             } else {
-                document.getElementById('ip').innerHTML = 'Not working';
+                document.getElementById('ip').innerHTML = 'NO ANDROID DETECTED!!';
                 document.getElementById('ip').style.color = 'red';
             }
 
             window.addEventListener('message', (res)=>{
-                document.getElementById('ip').innerHTML = 'SUCCESS';
+                document.getElementById('ip').innerHTML = 'SUCCESS123';
                 document.getElementById('ip').style.color = 'green';
             });
         }
 
-        function receiveDataFromAndroid(data) {
-            document.getElementById('ip').innerHTML = 'SUCCESS';
-            document.getElementById('ip').style.color = 'green';
+        function printSpotBookingTicket() {
+            const ticketObj = JSON.stringify(ticketObj);
+            if (window.PremiumSpotBookingAndroidInterface) {
+                window.PremiumSpotBookingAndroidInterface.printSpotBookingTicket(ticketObj);
+            }else{
+                document.getElementById('ip').innerHTML = 'FAILED';
+                document.getElementById('ip').style.color = 'red';
+            }
+        }
+        
+        // RECEIVE
+        function receivePrinterStatusFromEtim(res) {
+            if(res && JSON.parse(res)){
+                const obj = JSON.parse(res);
+                document.getElementById('ip').innerHTML = obj.isSuccess? 'PRINTER IS READY!!': 'ERROR';
+                document.getElementById('ip').style.color = 'green';
+                document.getElementById('cus-btn').style.color = 'orange';
+                document.getElementById('cus-btn').style.border = '4px solid orange';
+                document.getElementById('cus-btn').style.pointerEvents = 'unset';
+            }
         }
 
+
+        function receiveTicketPrintStatusFromEtim(res){
+            if(res && JSON.parse(res)){
+                const obj = JSON.parse(res);
+                document.getElementById('ip').innerHTML = obj.isSuccess? 'PRINTING': 'ERROR';
+                document.getElementById('ip').style.color = 'green';
+            }
+        }
+
+        checkPrinterStatus();
         
     </script>
 </html>
